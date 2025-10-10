@@ -1,0 +1,150 @@
+[gd_scene load_steps=8 format=3 uid="uid://lhhvqtm86y4w"]
+
+[ext_resource type="Script" uid="uid://dl6xsunvcgugk" path="res://scripts/GameOver.gd" id="1_7m3ot"]
+[ext_resource type="FontFile" uid="uid://byxesycy1lhna" path="res://font/VCR_OSD_MONO_1.001.ttf" id="1_tbwuq"]
+[ext_resource type="Texture2D" uid="uid://bkpkvlaw4u3am" path="res://img/ui/racha.png" id="2_racf3"]
+[ext_resource type="Texture2D" uid="uid://qx6hoj5t6k5e" path="res://img/ui/score.png" id="3_7m3ot"]
+[ext_resource type="PackedScene" uid="uid://mwewyw8rx0re" path="res://scenes/play.tscn" id="4_racf3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_v3hpu"]
+font = ExtResource("1_tbwuq")
+font_size = 71
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_irg28"]
+font = ExtResource("1_tbwuq")
+font_size = 21
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7m3ot")
+
+[node name="Bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.160784, 0.298039, 0.4, 1)
+
+[node name="Msg" type="Label" parent="Bg"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -180.0
+offset_top = 50.0
+offset_right = 194.0
+offset_bottom = 113.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+text = "Game Over"
+label_settings = SubResource("LabelSettings_v3hpu")
+horizontal_alignment = 1
+
+[node name="Streak" type="Sprite2D" parent="Bg"]
+position = Vector2(251, 214)
+texture = ExtResource("2_racf3")
+
+[node name="Streak" type="Label" parent="Bg/Streak"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -306.0
+offset_top = -100.0
+offset_right = 68.0
+offset_bottom = -37.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+text = "Highest Streak"
+label_settings = SubResource("LabelSettings_irg28")
+horizontal_alignment = 1
+
+[node name="Streak2" type="Label" parent="Bg/Streak"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -306.0
+offset_top = -86.5
+offset_right = 68.0
+offset_bottom = -23.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = SubResource("LabelSettings_irg28")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Score" type="Sprite2D" parent="Bg"]
+position = Vector2(252, 373)
+texture = ExtResource("3_7m3ot")
+
+[node name="Score" type="Label" parent="Bg/Score"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -337.0
+offset_top = -47.0
+offset_right = 37.0
+offset_bottom = 16.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+text = "Score"
+label_settings = SubResource("LabelSettings_irg28")
+horizontal_alignment = 1
+
+[node name="Score2" type="Label" parent="Bg/Score"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -337.0
+offset_top = -86.5
+offset_right = 37.0
+offset_bottom = -23.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = SubResource("LabelSettings_irg28")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Play" parent="." instance=ExtResource("4_racf3")]
+position = Vector2(255, 539)
+
+[node name="Score" type="Label" parent="Play"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -185.0
+offset_top = -40.0
+offset_right = 189.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+text = "Play"
+label_settings = SubResource("LabelSettings_irg28")
+horizontal_alignment = 1
+vertical_alignment = 1

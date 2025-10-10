@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dv4bq23v62jvh"]
+
+[ext_resource type="Script" uid="uid://ce3j4u2jvqvrg" path="res://scripts/ProgresBar.gd" id="1_25ywb"]
+[ext_resource type="Texture2D" uid="uid://bmnheibbqicn0" path="res://img/capsula.png" id="1_jyajj"]
+[ext_resource type="Texture2D" uid="uid://deehgsmelaybv" path="res://img/barra.png" id="2_25ywb"]
+
+[node name="Charge" type="Node2D"]
+script = ExtResource("1_25ywb")
+
+[node name="Capsule" type="Sprite2D" parent="."]
+scale = Vector2(1, 2.2)
+texture = ExtResource("1_jyajj")
+
+[node name="Bar" type="Sprite2D" parent="Capsule"]
+position = Vector2(-462, -6)
+scale = Vector2(0.999664, 1.07371)
+texture = ExtResource("2_25ywb")
+centered = false

@@ -1,0 +1,161 @@
+[gd_scene load_steps=13 format=3 uid="uid://cib6o2c6o1lpa"]
+
+[ext_resource type="Script" uid="uid://ceu64m4hxgwwl" path="res://scripts/game.gd" id="1_uwrxv"]
+[ext_resource type="Texture2D" uid="uid://nqgoter22dew" path="res://img/fina-l.png" id="2_u5sy4"]
+[ext_resource type="Texture2D" uid="uid://qx6hoj5t6k5e" path="res://img/ui/score.png" id="3_0tnpc"]
+[ext_resource type="FontFile" uid="uid://byxesycy1lhna" path="res://font/VCR_OSD_MONO_1.001.ttf" id="3_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://dmija61g1f1xy" path="res://scenes/btn.tscn" id="4_lbhrr"]
+[ext_resource type="Script" uid="uid://be0s2dghg4cnp" path="res://scripts/history.gd" id="4_u5sy4"]
+[ext_resource type="AudioStream" uid="uid://d0oteftko2nu0" path="res://sound/476178__unadamlar__correct-choice.wav" id="5_p57ef"]
+[ext_resource type="Texture2D" uid="uid://bkpkvlaw4u3am" path="res://img/ui/racha.png" id="5_vtaks"]
+[ext_resource type="PackedScene" uid="uid://dv4bq23v62jvh" path="res://scenes/charge.tscn" id="6_gee14"]
+[ext_resource type="AudioStream" uid="uid://j4gbophubk5d" path="res://sound/514159__edwardszakal__distorted-beep-incorrect.mp3" id="6_u5sy4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_iywne"]
+font = ExtResource("3_lnu2h")
+font_size = 40
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_u5sy4"]
+font = ExtResource("3_lnu2h")
+font_size = 71
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="game" type="Node"]
+script = ExtResource("1_uwrxv")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="bg" type="Sprite2D" parent="UI"]
+position = Vector2(255, 385)
+scale = Vector2(0.498047, 0.501302)
+texture = ExtResource("2_u5sy4")
+
+[node name="TopBar" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 24.0
+offset_top = 16.0
+offset_right = -25.0
+offset_bottom = 157.0
+grow_horizontal = 2
+
+[node name="Score" type="Sprite2D" parent="UI/TopBar"]
+position = Vector2(110, 104)
+scale = Vector2(0.75, 0.65)
+texture = ExtResource("3_0tnpc")
+
+[node name="ScoreLabel" type="Label" parent="UI/TopBar/Score"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -73.0
+offset_right = 61.0
+offset_bottom = -37.0
+grow_vertical = 2
+size_flags_horizontal = 3
+text = " Score:"
+label_settings = SubResource("LabelSettings_iywne")
+
+[node name="Streak" type="Sprite2D" parent="UI/TopBar"]
+position = Vector2(405, 104)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_vtaks")
+
+[node name="StreakLabel" type="Label" parent="UI/TopBar/Streak"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -224.5
+offset_top = -73.0
+offset_right = -13.5
+offset_bottom = -37.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = SubResource("LabelSettings_iywne")
+horizontal_alignment = 1
+
+[node name="ProblemArea" type="Control" parent="UI"]
+anchors_preset = 0
+offset_left = 24.0
+offset_top = 416.0
+offset_right = 488.0
+offset_bottom = 518.0
+
+[node name="Problem" type="Label" parent="UI/ProblemArea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_u5sy4")
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="Control" type="Control" parent="UI"]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = 24.0
+offset_top = 168.0
+offset_right = 488.0
+offset_bottom = 392.0
+
+[node name="BoxHistory" type="Control" parent="UI/Control"]
+clip_children = 1
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_u5sy4")
+
+[node name="GridContainer" type="GridContainer" parent="UI"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 549.0
+offset_right = 490.0
+offset_bottom = 763.0
+columns = 2
+
+[node name="Option1" parent="UI/GridContainer" instance=ExtResource("4_lbhrr")]
+position = Vector2(102, 51)
+
+[node name="Option2" parent="UI/GridContainer" instance=ExtResource("4_lbhrr")]
+position = Vector2(362, 51)
+
+[node name="Option3" parent="UI/GridContainer" instance=ExtResource("4_lbhrr")]
+position = Vector2(102, 161)
+
+[node name="Option4" parent="UI/GridContainer" instance=ExtResource("4_lbhrr")]
+position = Vector2(362, 161)
+
+[node name="Charge" parent="." instance=ExtResource("6_gee14")]
+position = Vector2(250, 50)
+scale = Vector2(0.477, 0.5)
+
+[node name="Correct" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_p57ef")
+
+[node name="Incorrect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_u5sy4")
