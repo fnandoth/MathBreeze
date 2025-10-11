@@ -5,8 +5,9 @@ signal TiempoActualizado(NuevoTiempo)
 
 @onready var CapsuleSprite = $Capsule
 @onready var BarSprite = $Capsule/Bar
+@onready var Aplayer = $Shake
+
 var TweenAnim: Tween
-var ShakeTween: Tween
 
 var TiempoTotal: float = 30.0
 var TiempoActual: float = 30.0
@@ -16,8 +17,6 @@ var TiempoCorriendo: bool = true
 var ShakeActivo: bool = false
 var RotacionOriginal: float = 0.0
 var UmbralShake: float = 15.0
-var MaxRotacion: float = 2.5
-var FrecuenciaShake: float = 1.5  # Frecuencia fija
 
 
 func _ready():
@@ -50,29 +49,12 @@ func ControlarShake():
 
 func IniciarShake():
 	ShakeActivo = true
-	if ShakeTween:
-		ShakeTween.kill()
-	CrearTweenOscilacion()
-
-
-func CrearTweenOscilacion():
-	ShakeTween = create_tween()
-	ShakeTween.set_loops()
-	
-	# Oscilación continua con frecuencia fija
-	ShakeTween.tween_property(CapsuleSprite, "rotation_degrees",
-		RotacionOriginal + MaxRotacion, 0.5 / FrecuenciaShake).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	ShakeTween.tween_property(CapsuleSprite, "rotation_degrees",
-		RotacionOriginal - MaxRotacion, 1.0 / FrecuenciaShake).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	ShakeTween.tween_property(CapsuleSprite, "rotation_degrees",
-		RotacionOriginal, 0.5 / FrecuenciaShake).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	Aplayer.play("shake")
 
 
 func DetenerShake():
 	ShakeActivo = false
-	if ShakeTween:
-		ShakeTween.kill()
-		ShakeTween = null
+	Aplayer.stop()
 	
 	var RestoreTween = create_tween()
 	RestoreTween.tween_property(CapsuleSprite, "rotation_degrees", RotacionOriginal, 0.2)

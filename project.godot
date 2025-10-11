@@ -26,4 +26,8 @@ Global="*res://scripts/global.gd"
 
 window/size/viewport_width=510
 window/size/viewport_height=770
-window/size/borderless=true
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

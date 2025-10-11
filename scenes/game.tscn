@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cib6o2c6o1lpa"]
+[gd_scene load_steps=15 format=3 uid="uid://cib6o2c6o1lpa"]
 
 [ext_resource type="Script" uid="uid://ceu64m4hxgwwl" path="res://scripts/game.gd" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://nqgoter22dew" path="res://img/fina-l.png" id="2_u5sy4"]
@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://bkpkvlaw4u3am" path="res://img/ui/racha.png" id="5_vtaks"]
 [ext_resource type="PackedScene" uid="uid://dv4bq23v62jvh" path="res://scenes/charge.tscn" id="6_gee14"]
 [ext_resource type="AudioStream" uid="uid://j4gbophubk5d" path="res://sound/514159__edwardszakal__distorted-beep-incorrect.mp3" id="6_u5sy4"]
+[ext_resource type="AudioStream" uid="uid://hvw0wywdcnsv" path="res://sound/Pixel.MP3" id="11_kvpfn"]
+[ext_resource type="PackedScene" uid="uid://ckr5lmmgvrgb2" path="res://scenes/music.tscn" id="12_dinhu"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_iywne"]
 font = ExtResource("3_lnu2h")
@@ -159,3 +161,12 @@ stream = ExtResource("5_p57ef")
 
 [node name="Incorrect" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_u5sy4")
+
+[node name="BgMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_kvpfn")
+autoplay = true
+parameters/looping = true
+
+[node name="MusicBtn" parent="." instance=ExtResource("12_dinhu")]
+position = Vector2(310, 121)
+scale = Vector2(0.5, 0.5)

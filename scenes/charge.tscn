@@ -1,8 +1,46 @@
-[gd_scene load_steps=4 format=3 uid="uid://dv4bq23v62jvh"]
+[gd_scene load_steps=7 format=3 uid="uid://dv4bq23v62jvh"]
 
 [ext_resource type="Script" uid="uid://ce3j4u2jvqvrg" path="res://scripts/ProgresBar.gd" id="1_25ywb"]
 [ext_resource type="Texture2D" uid="uid://bmnheibbqicn0" path="res://img/capsula.png" id="1_jyajj"]
 [ext_resource type="Texture2D" uid="uid://deehgsmelaybv" path="res://img/barra.png" id="2_25ywb"]
+
+[sub_resource type="Animation" id="Animation_25ywb"]
+resource_name = "shake"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Capsule:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0349066, 0.0, -0.0349066, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_76xf2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Capsule:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cwcfk"]
+_data = {
+&"RESET": SubResource("Animation_76xf2"),
+&"shake": SubResource("Animation_25ywb")
+}
 
 [node name="Charge" type="Node2D"]
 script = ExtResource("1_25ywb")
@@ -16,3 +54,8 @@ position = Vector2(-462, -6)
 scale = Vector2(0.999664, 1.07371)
 texture = ExtResource("2_25ywb")
 centered = false
+
+[node name="Shake" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_cwcfk")
+}

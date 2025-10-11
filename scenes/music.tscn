@@ -1,0 +1,96 @@
+[gd_scene load_steps=8 format=3 uid="uid://ckr5lmmgvrgb2"]
+
+[ext_resource type="Script" uid="uid://b531yi5o6up3w" path="res://scripts/music.gd" id="1_ejojg"]
+[ext_resource type="Texture2D" uid="uid://pdxvbsvbgxin" path="res://img/btn/buttom-b.png" id="2_mobtd"]
+[ext_resource type="Texture2D" uid="uid://ci7xyv0nph8yi" path="res://img/btn/topbb.png" id="3_keplp"]
+[ext_resource type="Texture2D" uid="uid://fmfwmnubsvsj" path="res://img/musicW.png" id="4_ejojg"]
+
+[sub_resource type="Animation" id="Animation_1bdt2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 8)]
+}
+
+[sub_resource type="Animation" id="Animation_i7y4x"]
+resource_name = "press"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 8), Vector2(0, 20), Vector2(0, 8)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8m7bo"]
+_data = {
+&"RESET": SubResource("Animation_1bdt2"),
+&"press": SubResource("Animation_i7y4x")
+}
+
+[node name="Node" type="Node2D"]
+script = ExtResource("1_ejojg")
+
+[node name="Base" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.245)
+texture = ExtResource("2_mobtd")
+
+[node name="Topbb" type="Sprite2D" parent="Base"]
+position = Vector2(0, 8)
+texture = ExtResource("3_keplp")
+
+[node name="MusicIcon" type="TextureRect" parent="Base/Topbb"]
+offset_left = -80.0
+offset_top = -89.6327
+offset_right = 432.0
+offset_bottom = 422.367
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_ejojg")
+
+[node name="press" type="AnimationPlayer" parent="Base"]
+root_node = NodePath("../Topbb")
+libraries = {
+&"": SubResource("AnimationLibrary_8m7bo")
+}
+
+[node name="Control" type="Control" parent="Base"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -211.5
+offset_top = -102.5
+offset_right = -211.5
+offset_bottom = -102.5
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="Base/Control"]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.00118203
+anchor_top = 0.00223994
+anchor_right = 0.998818
+anchor_bottom = 1.00224
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="Base/Control/Button" to="." method="_on_button_pressed"]

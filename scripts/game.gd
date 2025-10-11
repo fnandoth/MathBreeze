@@ -7,6 +7,8 @@ extends Node
 @onready var History = $UI/Control/BoxHistory
 @onready var Charger = $Charge
 @onready var StreakLabel = $UI/TopBar/Streak/StreakLabel
+@onready var Music = $BgMusic
+@onready var MusicIcon: TextureRect = $MusicBtn/Base/Topbb/MusicIcon
 
 # Options (buttons)
 @onready var Option1Label = $UI/GridContainer/Option1/Base/Topbb/Label
@@ -23,18 +25,19 @@ var CurrentProblem: Dictionary
 var TimeLeft: float = 30.0
 var LineHeight := 48 
 #var StrakeCount: int = 0
+var MusicState: bool = true
 
 # Animation states
 var IsAnswerProcessing: bool = false
 var FeedbackTween: Tween
 var NextProblemReady: bool = true
 
-# Pre-generation variables
 var NextProblemData: Dictionary
 var NextOptionsData: Array
 
 
 func _ready():
+	MusicIcon.modulate = Color(0, 1, 0)
 	StartNewGame()
 	Charger.TiempoAgotado.connect(OnTiempoAgotado)
 
@@ -59,7 +62,7 @@ func StartNewGame():
 	PreGenerateNextProblem()
 	DisplayCurrentProblem()
 	
-	Charger.EstablecerTiempoTotal(30.0)
+	Charger.EstablecerTiempoTotal(0.5)
 	Charger.ReiniciarTiempo()
 
 
@@ -99,6 +102,14 @@ func IsEqualApprox(a: float, b: float) -> bool:
 func GameOver():
 	get_tree().change_scene_to_file("res://scenes/game_over.tscn")
 
+func StopMusic():
+	if MusicState:
+		Music.stop()
+		MusicIcon.modulate = Color.BLACK
+	else:
+		Music.play()
+		MusicIcon.modulate = Color.GREEN
+	MusicState = !MusicState
 
 func OnOptionSelected(SelectedValue: String):
 	if IsAnswerProcessing:
@@ -118,7 +129,7 @@ func OnOptionSelected(SelectedValue: String):
 		Global.Score += 1
 		Global.Streak += 1
 		CorrectSound.play()
-		Charger.AgregarTiempoExtra(0.5)
+		Charger.AgregarTiempoExtra(10.0)
 	else:
 		if Global.Streak > Global.HighestScore:
 			Global.HighestStreak = Global.Streak
