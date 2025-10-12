@@ -62,7 +62,7 @@ func StartNewGame():
 	PreGenerateNextProblem()
 	DisplayCurrentProblem()
 	
-	Charger.EstablecerTiempoTotal(0.5)
+	Charger.EstablecerTiempoTotal(TimeLeft)
 	Charger.ReiniciarTiempo()
 
 
@@ -129,7 +129,7 @@ func OnOptionSelected(SelectedValue: String):
 		Global.Score += 1
 		Global.Streak += 1
 		CorrectSound.play()
-		Charger.AgregarTiempoExtra(10.0)
+		Charger.AgregarTiempoExtra(0.5)
 	else:
 		if Global.Streak > Global.HighestScore:
 			Global.HighestStreak = Global.Streak
