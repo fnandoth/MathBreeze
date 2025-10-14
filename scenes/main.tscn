@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cuj2nsx2fn754"]
+[gd_scene load_steps=10 format=3 uid="uid://cuj2nsx2fn754"]
 
 [ext_resource type="FontFile" uid="uid://byxesycy1lhna" path="res://font/VCR_OSD_MONO_1.001.ttf" id="1_sugp2"]
 [ext_resource type="Script" uid="uid://d0uqcawjqsofo" path="res://scripts/main.gd" id="1_tbgi4"]
 [ext_resource type="Texture2D" uid="uid://bkpkvlaw4u3am" path="res://img/ui/racha.png" id="2_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://qx6hoj5t6k5e" path="res://img/ui/score.png" id="3_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://mwewyw8rx0re" path="res://scenes/play.tscn" id="4_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://bxgoynvuhx8vt" path="res://scenes/changescene.tscn" id="6_tefeu"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_tefeu"]
 font = ExtResource("1_sugp2")
@@ -134,6 +135,7 @@ label_settings = SubResource("LabelSettings_o6xl0")
 horizontal_alignment = 1
 
 [node name="Play" parent="." instance=ExtResource("4_jyhfs")]
+visible = false
 position = Vector2(253, 539)
 
 [node name="Score" type="Label" parent="Play"]
@@ -150,6 +152,69 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 text = "Play"
+label_settings = SubResource("LabelSettings_tbgi4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Levels" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05490196
+anchor_top = 0.6454545
+anchor_right = 0.05490196
+anchor_bottom = 0.6454545
+offset_left = -5.0
+offset_top = 10.0
+offset_right = -5.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(-1.8410065, 2.6177518)
+columns = 2
+
+[node name="test" parent="Levels" instance=ExtResource("6_tefeu")]
+position = Vector2(-52.688572, 17.190315)
+rotation = 3.1415927
+scale = Vector2(0.5431811, -0.38200718)
+
+[node name="SceneName" type="Label" parent="Levels/test"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -185.0
+offset_top = -40.0
+offset_right = 189.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+text = "M1"
+label_settings = SubResource("LabelSettings_tbgi4")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="test2" parent="Levels" instance=ExtResource("6_tefeu")]
+position = Vector2(-200.43384, 17.190315)
+rotation = 3.1415927
+scale = Vector2(0.5431811, -0.38200718)
+
+[node name="SceneName" type="Label" parent="Levels/test2"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -185.0
+offset_top = -40.0
+offset_right = 189.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+text = "M2"
 label_settings = SubResource("LabelSettings_tbgi4")
 horizontal_alignment = 1
 vertical_alignment = 1

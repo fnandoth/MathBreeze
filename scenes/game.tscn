@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cib6o2c6o1lpa"]
+[gd_scene load_steps=14 format=3 uid="uid://cib6o2c6o1lpa"]
 
 [ext_resource type="Script" uid="uid://ceu64m4hxgwwl" path="res://scripts/game.gd" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://nqgoter22dew" path="res://img/fina-l.png" id="2_u5sy4"]
@@ -17,13 +17,6 @@
 font = ExtResource("3_lnu2h")
 font_size = 40
 outline_size = 4
-outline_color = Color(0, 0, 0, 1)
-shadow_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_u5sy4"]
-font = ExtResource("3_lnu2h")
-font_size = 71
-outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 shadow_color = Color(0, 0, 0, 1)
 
@@ -107,19 +100,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-label_settings = SubResource("LabelSettings_u5sy4")
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 clip_text = true
 
 [node name="Control" type="Control" parent="UI"]
 clip_contents = true
-layout_mode = 3
 anchors_preset = 0
 offset_left = 24.0
 offset_top = 168.0
 offset_right = 488.0
 offset_bottom = 392.0
+script = ExtResource("4_u5sy4")
+pool_size = 3
 
 [node name="BoxHistory" type="Control" parent="UI/Control"]
 clip_children = 1
@@ -130,7 +124,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("4_u5sy4")
 
 [node name="GridContainer" type="GridContainer" parent="UI"]
 layout_mode = 0

@@ -3,8 +3,8 @@ extends Node
 ### UI Elements ###
 @onready var Ui = $UI
 @onready var ScoreLabel = $UI/TopBar/Score/ScoreLabel
-@onready var ProblemLabel = $UI/ProblemArea/Problem
-@onready var History = $UI/Control/BoxHistory
+@onready var ProblemLabel: Label = $UI/ProblemArea/Problem
+@onready var History = $UI/Control
 @onready var Charger = $Charge
 @onready var StreakLabel = $UI/TopBar/Streak/StreakLabel
 @onready var Music = $BgMusic
@@ -19,7 +19,9 @@ extends Node
 @onready var IncorrectSound = $Incorrect
 
 ### Game State ###
-var MathProblem = preload("res://scripts/MathProblem.gd").new()
+#var MathProblem = preload("res://scripts/MathProblem.gd").new()
+var MathProblem = preload("res://scripts/M1Problem.gd").new()
+var pixel_font = preload("res://font/VCR_OSD_MONO_1.001.ttf")
 var CurrentProblem: Dictionary
 #var Score: int = 0
 var TimeLeft: float = 30.0
@@ -67,9 +69,9 @@ func StartNewGame():
 
 
 func PreGenerateNextProblem() -> void:
-	NextProblemData = MathProblem.GenerateProblem(CalculateDifficulty())
-	var CorrectAnswer = NextProblemData["answer"]
-	NextOptionsData = MathProblem.GenerateOptions(CorrectAnswer)
+	NextProblemData = MathProblem.GenerateProblem(3)
+	#var CorrectAnswer = NextProblemData["answer"]
+	NextOptionsData = MathProblem.GenerateOptions(NextProblemData, 4)
 	NextProblemReady = true
 
 
@@ -80,8 +82,11 @@ func DisplayCurrentProblem() -> void:
 	CurrentProblem = NextProblemData
 	ScoreLabel.text = " Score:%d" % Global.Score
 	StreakLabel.text = "%d" % Global.Streak
-	ProblemLabel.text = MathProblem.GetProblemText(CurrentProblem)
-	
+	var ProblemText = MathProblem.GetProblemText(CurrentProblem)
+	#ProblemLabel.set_auto_text(ProblemText)
+	ProblemLabel.text = ProblemText
+	_get_autosize_font_size(ProblemLabel)
+
 	Option1Label.text = str(NextOptionsData[0])
 	Option2Label.text = str(NextOptionsData[1])
 	Option3Label.text = str(NextOptionsData[2])
@@ -91,12 +96,74 @@ func DisplayCurrentProblem() -> void:
 	call_deferred("PreGenerateNextProblem")
 
 
+func _get_autosize_font_size(label: Label, min_font_size: int = 8, max_font_size: int = 48) -> int:
+	var aux_text := label.text
+	var base_font := label.get_theme_font("font")
+	
+	var width_limit := label.size.x # will use control data for more accurate behavior
+	var height_limit := label.size.y # will use control data for more accurate behavior
+	var best_font_size := min_font_size
+	# Will do a binary search for faster results
+	var low := min_font_size
+	var high := max_font_size
+	while low <= high:
+		var mid := int((low + high) * 0.5) # Test font size
+		var text_size := base_font.get_multiline_string_size(aux_text, label.horizontal_alignment,\
+			width_limit, mid, 3)
+		# WARNING for some reason is returning a wrong height while setting max line count
+		# thus making max_lines != INFINITE_MAX_LINES unusable.
+		var text_width := text_size.x
+		var text_height := text_size.y
+		# Will test size withouth waiting a frame draw.
+		if text_width <= width_limit and text_height <= height_limit:
+			best_font_size = mid
+			low = mid + 1  # Try bigger
+		else:
+			high = mid - 1  # Try smaller
+	
+	label.add_theme_font_size_override("font_size", best_font_size)
+	return best_font_size
+
 func CalculateDifficulty() -> int:
 	return min(Global.Score / 5 + 1, 5)
 
 
-func IsEqualApprox(a: float, b: float) -> bool:
-	return abs(a - b) < 0.0001
+func is_equal_flexible(a, b) -> bool:
+	if a == null and b == null:
+		return true
+
+	if typeof(a) == typeof(b):
+		if a is float or a is int:
+			return is_equal_approx(float(a), float(b))
+		return a == b
+
+	var a_num = null
+	var b_num = null
+	var a_is_num = false
+	var b_is_num = false
+
+	if a is float or a is int:
+		a_num = float(a)
+		a_is_num = true
+	elif a is String and a.is_valid_float():
+		a_num = float(a)
+		a_is_num = true
+
+	if b is float or b is int:
+		b_num = float(b)
+		b_is_num = true
+	elif b is String and b.is_valid_float():
+		b_num = float(b)
+		b_is_num = true
+
+	if a_is_num and b_is_num:
+		return is_equal_approx(a_num, b_num)
+
+	if str(a) == str(b):
+		return true
+
+	return false
+
 
 
 func GameOver():
@@ -117,9 +184,9 @@ func OnOptionSelected(SelectedValue: String):
 	
 	IsAnswerProcessing = true
 	
-	var PlayerNum = SelectedValue.to_float()
+	#var PlayerNum = SelectedValue.to_float()
 	var CorrectNum = CurrentProblem["answer"]
-	var IsCorrect = IsEqualApprox(PlayerNum, CorrectNum)
+	var IsCorrect = is_equal_flexible(SelectedValue, CorrectNum)
 	
 	var HistoryText = MathProblem.GetProblemText(CurrentProblem) + SelectedValue
 	
@@ -130,11 +197,12 @@ func OnOptionSelected(SelectedValue: String):
 		Global.Streak += 1
 		CorrectSound.play()
 		Charger.AgregarTiempoExtra(0.5)
-	else:
-		if Global.Streak > Global.HighestScore:
+		if Global.Streak > Global.HighestStreak:
 			Global.HighestStreak = Global.Streak
+	else:
 		Global.Streak = 0
 		IncorrectSound.play()
+	
 	
 	History.add_message(HistoryText, IsCorrect)
 	ShowRapidTransition()
@@ -164,9 +232,8 @@ func OnOptionSelectedInstant(SelectedValue: String):
 	
 	IsAnswerProcessing = true
 	
-	var PlayerNum = SelectedValue.to_float()
 	var CorrectNum = CurrentProblem["answer"]
-	var IsCorrect = IsEqualApprox(PlayerNum, CorrectNum)
+	var IsCorrect = is_equal_flexible(SelectedValue, CorrectNum)
 	
 	var HistoryText = MathProblem.GetProblemText(CurrentProblem) + SelectedValue
 	
@@ -176,7 +243,7 @@ func OnOptionSelectedInstant(SelectedValue: String):
 	else:
 		IncorrectSound.play()
 	
-	History.AddMessage(HistoryText, IsCorrect)
+	History.add_message(HistoryText, IsCorrect)
 	ProblemLabel.modulate = Color.GREEN if IsCorrect else Color.RED
 	call_deferred("InstantNextProblem")
 

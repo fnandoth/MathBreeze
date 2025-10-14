@@ -1,10 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://lhhvqtm86y4w"]
+[gd_scene load_steps=9 format=3 uid="uid://lhhvqtm86y4w"]
 
 [ext_resource type="Script" uid="uid://dl6xsunvcgugk" path="res://scripts/GameOver.gd" id="1_7m3ot"]
 [ext_resource type="FontFile" uid="uid://byxesycy1lhna" path="res://font/VCR_OSD_MONO_1.001.ttf" id="1_tbwuq"]
 [ext_resource type="Texture2D" uid="uid://bkpkvlaw4u3am" path="res://img/ui/racha.png" id="2_racf3"]
 [ext_resource type="Texture2D" uid="uid://qx6hoj5t6k5e" path="res://img/ui/score.png" id="3_7m3ot"]
-[ext_resource type="PackedScene" uid="uid://mwewyw8rx0re" path="res://scenes/play.tscn" id="4_racf3"]
+[ext_resource type="PackedScene" uid="uid://bxgoynvuhx8vt" path="res://scenes/changescene.tscn" id="5_7m3ot"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_v3hpu"]
 font = ExtResource("1_tbwuq")
@@ -14,6 +14,13 @@ outline_color = Color(0, 0, 0, 1)
 shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_irg28"]
+font = ExtResource("1_tbwuq")
+font_size = 21
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2jtsn"]
 font = ExtResource("1_tbwuq")
 font_size = 21
 outline_size = 4
@@ -128,10 +135,10 @@ label_settings = SubResource("LabelSettings_irg28")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Play" parent="." instance=ExtResource("4_racf3")]
-position = Vector2(255, 539)
+[node name="test" parent="." instance=ExtResource("5_7m3ot")]
+position = Vector2(250, 550)
 
-[node name="Score" type="Label" parent="Play"]
+[node name="SceneName" type="Label" parent="test"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -144,7 +151,8 @@ offset_bottom = 23.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-text = "Play"
-label_settings = SubResource("LabelSettings_irg28")
+text = "Main"
+label_settings = SubResource("LabelSettings_2jtsn")
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
