@@ -189,6 +189,7 @@ func OnOptionSelected(SelectedValue: String):
 		if Global.Streak > Global.HighestStreak:
 			Global.HighestStreak = Global.Streak
 	else:
+		Charger.ReducirTiempo(0.5)
 		Global.Streak = 0
 		IncorrectSound.play()
 	

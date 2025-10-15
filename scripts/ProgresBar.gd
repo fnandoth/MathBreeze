@@ -77,6 +77,30 @@ func AgregarTiempoExtra(Cantidad: float = 0.5):
 	BrilloTween.tween_property(BarSprite, "modulate", Color(1.5, 1.5, 1.5, 1), 0.15)
 	BrilloTween.tween_property(BarSprite, "modulate", Color(1, 1, 1, 1), 0.25)
 
+func ReducirTiempo(Cantidad: float = 0.5):
+	if not TiempoCorriendo:
+		return
+	
+	TiempoActual = max(TiempoActual - Cantidad, 0.0)
+	var NuevoPorcentaje = clamp(TiempoActual / TiempoTotal, 0.0, 1.0)
+	
+	if TweenAnim:
+		TweenAnim.kill()
+	
+	TweenAnim = create_tween()
+	TweenAnim.tween_property(BarSprite, "scale:x", NuevoPorcentaje, 0.3).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	
+	TiempoActualizado.emit(TiempoActual)
+	
+	var BrilloTween = create_tween()
+	BrilloTween.tween_property(BarSprite, "modulate", Color(1.556, 0.0, 0.239, 1.0), 0.15)
+	BrilloTween.tween_property(BarSprite, "modulate", Color(1, 1, 1, 1), 0.25)
+	
+	if TiempoActual <= 0:
+		TiempoCorriendo = false
+		TiempoAgotado.emit()
+		DetenerShake()
+
 
 func PausarTiempo():
 	TiempoCorriendo = false

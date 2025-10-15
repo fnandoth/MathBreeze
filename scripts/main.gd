@@ -8,4 +8,4 @@ extends Node
 func _ready():
 	ScoreLabel.text = " %d" % Global.GHighestScore
 	StreakLabel.text = "%d" % Global.GHighestStreak
-	playerani.play("slide")
+	playerani.play("sec1")

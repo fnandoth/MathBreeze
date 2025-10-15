@@ -15,12 +15,11 @@ var scenes := {
 }
 
 var difficultymap := {
-	"Main": 1,
-	"M1": 1,
-	"M2": 2,
-	"M3": 3,
-	"M4": 4,
-	"M5": 5
+	"Main": 2,
+	"M1": 2,
+	"M2": 3,
+	"M3": 4,
+	"M4": 5
 }
 
 var IsButtonLocked: bool = false

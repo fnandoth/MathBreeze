@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cuj2nsx2fn754"]
+[gd_scene load_steps=13 format=3 uid="uid://cuj2nsx2fn754"]
 
 [ext_resource type="FontFile" uid="uid://byxesycy1lhna" path="res://font/VCR_OSD_MONO_1.001.ttf" id="1_sugp2"]
 [ext_resource type="Script" uid="uid://d0uqcawjqsofo" path="res://scripts/main.gd" id="1_tbgi4"]
@@ -27,6 +27,105 @@ outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 shadow_color = Color(0, 0, 0, 1)
 
+[sub_resource type="Animation" id="Animation_tefeu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Levels:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(16, 448.00003)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Levels/M1:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-52.688572, 17.190315)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Levels/M2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-200.43384, 17.190315)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Levels/M3:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-52.68857, 59.97512)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Levels/M4:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-200.43384, 59.97512)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Bg/Streak:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(251, 214)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Bg/Score:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(252, 373)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Bg/Msg:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(33.5, 50)]
+}
+
 [sub_resource type="Animation" id="Animation_tbgi4"]
 resource_name = "slide"
 length = 0.6
@@ -43,24 +142,98 @@ tracks/0/keys = {
 "values": [Vector2(16, 800), Vector2(16, 600), Vector2(16, 510), Vector2(16, 450)]
 }
 
-[sub_resource type="Animation" id="Animation_tefeu"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_o6xl0"]
+resource_name = "sec1"
+length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Levels:position")
+tracks/0/path = NodePath("Levels/M1:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.36666667),
+"transitions": PackedFloat32Array(0.3896793, 0.3896793),
 "update": 0,
-"values": [Vector2(16, 448.00003)]
+"values": [Vector2(-52.689, 150), Vector2(-52.689, 17.19)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Levels/M2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.46666667),
+"transitions": PackedFloat32Array(0.3896793, 0.3896793),
+"update": 0,
+"values": [Vector2(-200.434, 150), Vector2(-200.434, 17.19)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Levels/M3:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.3896793, 0.3896793),
+"update": 0,
+"values": [Vector2(-52.689, 200), Vector2(-52.68857, 59.97512)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Levels/M4:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5967),
+"transitions": PackedFloat32Array(0.3896793, 0.3896793),
+"update": 0,
+"values": [Vector2(-200.434, 200), Vector2(-200.43384, 59.97512)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Bg/Streak:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(0.389, 0.389),
+"update": 0,
+"values": [Vector2(700, 214), Vector2(251, 214)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Bg/Score:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(0.389, 0.389),
+"update": 0,
+"values": [Vector2(-200, 373), Vector2(252, 373)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Bg/Msg:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(33.5, -100), Vector2(33.5, 50)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o6xl0"]
 _data = {
 &"RESET": SubResource("Animation_tefeu"),
+&"sec1": SubResource("Animation_o6xl0"),
 &"slide": SubResource("Animation_tbgi4")
 }
 
@@ -87,9 +260,9 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -180.0
+offset_left = -221.5
 offset_top = 50.0
-offset_right = 194.0
+offset_right = 235.5
 offset_bottom = 113.0
 grow_horizontal = 2
 size_flags_horizontal = 3
@@ -188,7 +361,7 @@ columns = 2
 
 [node name="M1" parent="Levels" instance=ExtResource("6_tefeu")]
 position = Vector2(-52.688572, 17.190315)
-rotation = 3.1415927
+rotation = -3.1415925
 scale = Vector2(0.5431811, -0.38200718)
 
 [node name="SceneName" type="Label" parent="Levels/M1"]
@@ -212,7 +385,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="M2" parent="Levels" instance=ExtResource("6_tefeu")]
 position = Vector2(-200.43384, 17.190315)
-rotation = 3.1415927
+rotation = -3.1415925
 scale = Vector2(0.5431811, -0.38200718)
 
 [node name="SceneName" type="Label" parent="Levels/M2"]
@@ -232,6 +405,7 @@ text = "M2"
 label_settings = SubResource("LabelSettings_tbgi4")
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="M3" parent="Levels" instance=ExtResource("6_tefeu")]
 position = Vector2(-52.68857, 59.97512)
@@ -275,29 +449,6 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 text = "M4"
-label_settings = SubResource("LabelSettings_tbgi4")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="M5" parent="Levels" instance=ExtResource("6_tefeu")]
-position = Vector2(-52.145386, 100.8499)
-rotation = 3.1415927
-scale = Vector2(0.5431811, -0.38200718)
-
-[node name="SceneName" type="Label" parent="Levels/M5"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -185.0
-offset_top = -40.0
-offset_right = 189.0
-offset_bottom = 23.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-text = "M5"
 label_settings = SubResource("LabelSettings_tbgi4")
 horizontal_alignment = 1
 vertical_alignment = 1
