@@ -46,7 +46,7 @@ _data = {
 script = ExtResource("1_ejojg")
 
 [node name="Base" type="Sprite2D" parent="."]
-scale = Vector2(0.25, 0.245)
+scale = Vector2(0.09, 0.25)
 texture = ExtResource("2_mobtd")
 
 [node name="Topbb" type="Sprite2D" parent="Base"]
@@ -54,11 +54,20 @@ position = Vector2(0, 8)
 texture = ExtResource("3_keplp")
 
 [node name="MusicIcon" type="TextureRect" parent="Base/Topbb"]
-offset_left = -80.0
-offset_top = -89.6327
-offset_right = 432.0
-offset_bottom = 422.367
-scale = Vector2(0.3, 0.3)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -344.8333
+offset_top = -186.5
+offset_right = 167.16669
+offset_bottom = 325.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.27)
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture = ExtResource("4_ejojg")
 
 [node name="press" type="AnimationPlayer" parent="Base"]

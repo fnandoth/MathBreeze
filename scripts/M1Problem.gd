@@ -10,7 +10,6 @@ enum OPERATION {
 	POWER, SQUARE_ROOT, CUBE_ROOT
 }
 
-# Estructuras para datos complejos
 class Fraction:
 	var numerator: int
 	var denominator: int
@@ -46,11 +45,11 @@ class Fraction:
 var CurrentOperation: OPERATION
 var CorrectAnswer
 var rng = RandomNumberGenerator.new()
+var ops = []
 
 func _ready():
 	rng.randomize()
 
-# Función principal de generación
 func GenerateProblem(Difficulty: int = 1) -> Dictionary:
 	var available_ops = _get_operations_for_difficulty(Difficulty)
 	CurrentOperation = available_ops[rng.randi() % available_ops.size()]
@@ -105,9 +104,12 @@ func GenerateProblem(Difficulty: int = 1) -> Dictionary:
 	
 	return problem_data
 
-# Selección de operaciones según dificultad
 func _get_operations_for_difficulty(diff: int) -> Array:
-	var ops = [OPERATION.ADD, OPERATION.SUBTRACT, OPERATION.MULTIPLY, OPERATION.DIVIDE]
+	if diff >= 1:
+		ops.append_array([
+			OPERATION.ADD, OPERATION.SUBTRACT, 
+			OPERATION.MULTIPLY, OPERATION.DIVIDE]
+		)
 	
 	if diff >= 2:
 		ops.append_array([

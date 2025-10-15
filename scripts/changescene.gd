@@ -8,9 +8,20 @@ var SceneName: Label
 var scenes := {
 	"Main": "res://scenes/main.tscn",
 	"M1": "res://scenes/game.tscn",
-	"M2": "res://scenes/game_over.tscn"
+	"M2": "res://scenes/game.tscn",
+	"M3": "res://scenes/game.tscn",
+	"M4": "res://scenes/game.tscn",
+	"M5": "res://scenes/game.tscn"
 }
 
+var difficultymap := {
+	"Main": 1,
+	"M1": 1,
+	"M2": 2,
+	"M3": 3,
+	"M4": 4,
+	"M5": 5
+}
 
 var IsButtonLocked: bool = false
 const MinimalCooldownTime: float = 0.05
@@ -18,7 +29,7 @@ var CooldownTimer: Timer
 
 
 func _ready():
-	SceneName = get_parent().find_child("SceneName")
+	SceneName = find_child("SceneName")
 	CooldownTimer = Timer.new()
 	add_child(CooldownTimer)
 	CooldownTimer.one_shot = true
@@ -37,6 +48,7 @@ func _on_button_pressed():
 func ChangeScene():
 	var textName = SceneName.text
 	if textName in scenes:
+		Global.Difficulty = difficultymap[textName]
 		get_tree().change_scene_to_file(scenes[textName])
 	else:
 		push_warning("Unknown scene: %s" % textName)

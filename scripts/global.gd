@@ -4,7 +4,7 @@ var Score: int = 0
 var HighestScore: int = 0
 var Streak: int = 0
 var HighestStreak: int = 0
-
+var Difficulty: int = 1
 var GHighestScore: int = 0
 var GHighestStreak: int = 0
 

@@ -1,6 +1,5 @@
 extends Node
-
-### UI Elements ###
+# ===== UI Elements =====
 @onready var Ui = $UI
 @onready var ScoreLabel = $UI/TopBar/Score/ScoreLabel
 @onready var ProblemLabel: Label = $UI/ProblemArea/Problem
@@ -10,7 +9,7 @@ extends Node
 @onready var Music = $BgMusic
 @onready var MusicIcon: TextureRect = $MusicBtn/Base/Topbb/MusicIcon
 
-# Options (buttons)
+# ===== Options (buttons) =====
 @onready var Option1Label = $UI/GridContainer/Option1/Base/Topbb/Label
 @onready var Option2Label = $UI/GridContainer/Option2/Base/Topbb/Label
 @onready var Option3Label = $UI/GridContainer/Option3/Base/Topbb/Label
@@ -18,18 +17,15 @@ extends Node
 @onready var CorrectSound = $Correct
 @onready var IncorrectSound = $Incorrect
 
-### Game State ###
-#var MathProblem = preload("res://scripts/MathProblem.gd").new()
+# ===== Game State =====
 var MathProblem = preload("res://scripts/M1Problem.gd").new()
 var pixel_font = preload("res://font/VCR_OSD_MONO_1.001.ttf")
 var CurrentProblem: Dictionary
-#var Score: int = 0
 var TimeLeft: float = 30.0
 var LineHeight := 48 
-#var StrakeCount: int = 0
 var MusicState: bool = true
 
-# Animation states
+# ===== Animation states =====
 var IsAnswerProcessing: bool = false
 var FeedbackTween: Tween
 var NextProblemReady: bool = true
@@ -39,7 +35,7 @@ var NextOptionsData: Array
 
 
 func _ready():
-	MusicIcon.modulate = Color(0, 1, 0)
+	MusicIcon.modulate = Color.WHITE
 	StartNewGame()
 	Charger.TiempoAgotado.connect(OnTiempoAgotado)
 
@@ -53,8 +49,6 @@ func OnTiempoActualizado(NuevoTiempo: float):
 
 
 func StartNewGame():
-	#Score = 0
-	#StrakeCount = 0
 	Global.Score = 0
 	Global.Streak = 0
 	
@@ -69,8 +63,7 @@ func StartNewGame():
 
 
 func PreGenerateNextProblem() -> void:
-	NextProblemData = MathProblem.GenerateProblem(3)
-	#var CorrectAnswer = NextProblemData["answer"]
+	NextProblemData = MathProblem.GenerateProblem(Global.Difficulty)
 	NextOptionsData = MathProblem.GenerateOptions(NextProblemData, 4)
 	NextProblemReady = true
 
@@ -83,7 +76,6 @@ func DisplayCurrentProblem() -> void:
 	ScoreLabel.text = " Score:%d" % Global.Score
 	StreakLabel.text = "%d" % Global.Streak
 	var ProblemText = MathProblem.GetProblemText(CurrentProblem)
-	#ProblemLabel.set_auto_text(ProblemText)
 	ProblemLabel.text = ProblemText
 	_get_autosize_font_size(ProblemLabel)
 
@@ -96,30 +88,28 @@ func DisplayCurrentProblem() -> void:
 	call_deferred("PreGenerateNextProblem")
 
 
-func _get_autosize_font_size(label: Label, min_font_size: int = 8, max_font_size: int = 48) -> int:
+func _get_autosize_font_size(label: Label, min_font_size: int = 12, max_font_size: int = 22) -> int:
 	var aux_text := label.text
 	var base_font := label.get_theme_font("font")
 	
-	var width_limit := label.size.x # will use control data for more accurate behavior
-	var height_limit := label.size.y # will use control data for more accurate behavior
+	var width_limit := label.size.x
+	var height_limit := label.size.y
 	var best_font_size := min_font_size
-	# Will do a binary search for faster results
+
 	var low := min_font_size
 	var high := max_font_size
 	while low <= high:
-		var mid := int((low + high) * 0.5) # Test font size
+		var mid := int((low + high) * 0.5)
 		var text_size := base_font.get_multiline_string_size(aux_text, label.horizontal_alignment,\
 			width_limit, mid, 3)
-		# WARNING for some reason is returning a wrong height while setting max line count
-		# thus making max_lines != INFINITE_MAX_LINES unusable.
 		var text_width := text_size.x
 		var text_height := text_size.y
-		# Will test size withouth waiting a frame draw.
+		
 		if text_width <= width_limit and text_height <= height_limit:
 			best_font_size = mid
-			low = mid + 1  # Try bigger
+			low = mid + 1
 		else:
-			high = mid - 1  # Try smaller
+			high = mid - 1
 	
 	label.add_theme_font_size_override("font_size", best_font_size)
 	return best_font_size
@@ -171,11 +161,11 @@ func GameOver():
 
 func StopMusic():
 	if MusicState:
-		Music.stop()
+		Music.volume_db = -80
 		MusicIcon.modulate = Color.BLACK
 	else:
-		Music.play()
-		MusicIcon.modulate = Color.GREEN
+		Music.volume_db = 0
+		MusicIcon.modulate = Color.WHITE
 	MusicState = !MusicState
 
 func OnOptionSelected(SelectedValue: String):
@@ -184,7 +174,6 @@ func OnOptionSelected(SelectedValue: String):
 	
 	IsAnswerProcessing = true
 	
-	#var PlayerNum = SelectedValue.to_float()
 	var CorrectNum = CurrentProblem["answer"]
 	var IsCorrect = is_equal_flexible(SelectedValue, CorrectNum)
 	
