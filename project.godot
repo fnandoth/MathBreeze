@@ -15,7 +15,7 @@ config/description="Game to improve mathematical or operational speed"
 run/main_scene="uid://cuj2nsx2fn754"
 config/features=PackedStringArray("4.5", "Forward Plus")
 boot_splash/image="uid://b7lixedtkjmvd"
-config/icon="uid://b6lhi2ojjot5q"
+config/icon="uid://bn8x304gdiowt"
 boot_splash/minimum_display_time=2000
 
 [autoload]

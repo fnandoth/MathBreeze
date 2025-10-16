@@ -1,18 +1,9 @@
 extends Control
-## Sistema de historial de mensajes con animación push-up optimizado.
-## Muestra hasta N mensajes que se desplazan verticalmente con feedback visual.
-
-# =============================================================================
-# SEÑALES
-# =============================================================================
 
 signal message_added(text: String, is_correct: bool)
 signal message_removed(message_id: int)
 signal history_cleared()
 
-# =============================================================================
-# CONFIGURACIÓN EXPORTADA
-# =============================================================================
 
 @export_group("Comportamiento")
 @export var max_visible_messages: int = 3
@@ -31,10 +22,6 @@ signal history_cleared()
 @export_group("Pool")
 @export_range(3, 10) var pool_size: int = 5
 
-# =============================================================================
-# CONSTANTES
-# =============================================================================
-
 const STAGE_POSITIONS: Array[float] = [500.0, 100.0, 0.0, -100.0]
 
 enum Stage {
@@ -44,23 +31,11 @@ enum Stage {
 	OLDEST = 3
 }
 
-# =============================================================================
-# NODOS
-# =============================================================================
-
-#@onready var base_label: Label = $HistoryProblem
-
-# =============================================================================
-# VARIABLES PRIVADAS
-# =============================================================================
 
 var _label_pool: Array[Label] = []
 var _active_messages: Array[MessageEntry] = []
 var _next_message_id: int = 0
 
-# =============================================================================
-# CLASES INTERNAS
-# =============================================================================
 
 class MessageEntry:
 	var label: Label
@@ -78,19 +53,10 @@ class MessageEntry:
 	func is_valid() -> bool:
 		return is_instance_valid(label) and label.visible
 
-# =============================================================================
-# CICLO DE VIDA
-# =============================================================================
-
 func _ready() -> void:
 	clip_contents = true
 	_initialize_pool()
 
-# =============================================================================
-# API PÚBLICA
-# =============================================================================
-
-## Agrega un mensaje al historial.
 func add_message(text: String, is_correct: bool) -> void:
 	if use_animations:
 		_add_message_animated(text, is_correct)
@@ -99,7 +65,7 @@ func add_message(text: String, is_correct: bool) -> void:
 	
 	message_added.emit(text, is_correct)
 
-## Limpia todos los mensajes del historial.
+
 func clear_history() -> void:
 	for entry in _active_messages:
 		if entry.is_valid():
@@ -109,17 +75,14 @@ func clear_history() -> void:
 	_next_message_id = 0
 	history_cleared.emit()
 
-## Retorna la cantidad de mensajes activos.
+
 func get_message_count() -> int:
 	return _active_messages.filter(func(e: MessageEntry) -> bool: return e.is_valid()).size()
 
-## Cambia el modo de animación en tiempo real.
+
 func set_animation_mode(enabled: bool) -> void:
 	use_animations = enabled
 
-# =============================================================================
-# MÉTODOS PRIVADOS - INICIALIZACIÓN
-# =============================================================================
 
 func _initialize_pool() -> void:
 	for i in pool_size:
@@ -130,10 +93,6 @@ func _initialize_pool() -> void:
 func _create_label() -> Label:
 	var label := Label.new()
 	
-	# Copiar propiedades del label base si existe
-	#if base_label:
-		#label.add_theme_font_override("font", base_label.get_theme_font("font"))
-	
 	label.add_theme_font_size_override("font_size", max_font_size)
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -143,17 +102,12 @@ func _create_label() -> Label:
 	add_child(label)
 	return label
 
-# =============================================================================
-# MÉTODOS PRIVADOS - POOL DE LABELS
-# =============================================================================
 
 func _get_label_from_pool() -> Label:
-	# Buscar label disponible
 	for label in _label_pool:
 		if not label.visible:
 			return label
 	
-	# Si no hay disponible, crear uno nuevo
 	var new_label := _create_label()
 	_label_pool.append(new_label)
 	return new_label
@@ -165,9 +119,6 @@ func _return_label_to_pool(label: Label) -> void:
 	label.text = ""
 	label.position.y = STAGE_POSITIONS[Stage.HIDDEN_BOTTOM]
 
-# =============================================================================
-# MÉTODOS PRIVADOS - AÑADIR MENSAJES (ANIMADO)
-# =============================================================================
 
 func _add_message_animated(text: String, is_correct: bool) -> void:
 	var label := _prepare_label(text, is_correct)
@@ -229,9 +180,6 @@ func _remove_message(entry: MessageEntry) -> void:
 	message_removed.emit(entry.id)
 	_remove_entry(entry)
 
-# =============================================================================
-# MÉTODOS PRIVADOS - AÑADIR MENSAJES (INSTANTÁNEO)
-# =============================================================================
 
 func _add_message_instant(text: String, is_correct: bool) -> void:
 	_shift_messages_instant()
@@ -270,9 +218,6 @@ func _remove_excess_messages_instant() -> void:
 		else:
 			break
 
-# =============================================================================
-# MÉTODOS PRIVADOS - UTILIDADES
-# =============================================================================
 
 func _prepare_label(text: String, is_correct: bool) -> Label:
 	var label := _get_label_from_pool()
@@ -334,7 +279,7 @@ func _auto_adjust_font_size(label: Label) -> void:
 	var high := max_font_size
 	var best_size := min_font_size
 	
-	# Búsqueda binaria para encontrar el tamaño óptimo
+	
 	while low <= high:
 		var mid := (low + high) / 2
 		var text_size := base_font.get_multiline_string_size(

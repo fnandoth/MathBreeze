@@ -151,7 +151,6 @@ func _generate_addition(diff: int) -> Dictionary:
 		"operation": OPERATION.ADD,
 		"answer": CorrectAnswer,
 		"problem_text": "%d + %d = " % [op1, op2],
-		"hint": "Suma ambos números"
 	}
 
 func _generate_subtraction(diff: int) -> Dictionary:
@@ -166,7 +165,6 @@ func _generate_subtraction(diff: int) -> Dictionary:
 		"operation": OPERATION.SUBTRACT,
 		"answer": CorrectAnswer,
 		"problem_text": "%d - %d = " % [op1, op2],
-		"hint": "Resta el segundo número del primero"
 	}
 
 func _generate_multiplication(diff: int) -> Dictionary:
@@ -181,7 +179,6 @@ func _generate_multiplication(diff: int) -> Dictionary:
 		"operation": OPERATION.MULTIPLY,
 		"answer": CorrectAnswer,
 		"problem_text": "%d × %d = " % [op1, op2],
-		"hint": "Multiplica ambos números"
 	}
 
 func _generate_division(diff: int) -> Dictionary:
@@ -196,7 +193,6 @@ func _generate_division(diff: int) -> Dictionary:
 		"operation": OPERATION.DIVIDE,
 		"answer": CorrectAnswer,
 		"problem_text": "%d ÷ %d = " % [op1, divisor],
-		"hint": "¿Cuántas veces cabe %d en %d?" % [divisor, op1]
 	}
 
 # ===== FRACCIONES =====
@@ -237,12 +233,10 @@ func _generate_fraction_operation(diff: int, op_type: String) -> Dictionary:
 		"answer": result.fake_to_string(),
 		"answer_decimal": CorrectAnswer,
 		"problem_text": "%s %s %s = " % [f1.fake_to_string(), op_symbol, f2.fake_to_string()],
-		"hint": "Recuerda simplificar el resultado"
 	}
 
 # ===== DECIMALES =====
 func _generate_decimal_operation(diff: int, op_type: String) -> Dictionary:
-	#var decimals = 1 if diff < 3 else 2
 	var max_val = 10.0 + diff * 5.0
 	
 	var op1 = snappedf(rng.randf_range(0.1, max_val), 0.01)
@@ -278,7 +272,6 @@ func _generate_decimal_operation(diff: int, op_type: String) -> Dictionary:
 		"operation": CurrentOperation,
 		"answer": CorrectAnswer,
 		"problem_text": "%.2f %s %.2f = " % [op1, op_symbol, op2],
-		"hint": "Alinea los puntos decimales"
 	}
 
 # ===== PORCENTAJES =====
@@ -292,8 +285,7 @@ func _generate_percentage(diff: int) -> Dictionary:
 		"operand2": base,
 		"operation": OPERATION.PERCENTAGE,
 		"answer": CorrectAnswer,
-		"problem_text": "¿Cuánto es el %d%% de %d? " % [percent, base],
-		"hint": "Multiplica %d × %d ÷ 100" % [base, percent]
+		"problem_text": "How much is %d%% of %d? " % [percent, base],
 	}
 
 func _generate_percentage_change(diff: int, increase: bool) -> Dictionary:
@@ -302,15 +294,14 @@ func _generate_percentage_change(diff: int, increase: bool) -> Dictionary:
 	var change = int(base * percent / 100.0)
 	CorrectAnswer = base + change if increase else base - change
 	
-	var action = "aumenta" if increase else "disminuye"
+	var action = "increase" if increase else "decrease"
 	
 	return {
 		"operand1": base,
 		"operand2": percent,
 		"operation": CurrentOperation,
 		"answer": CorrectAnswer,
-		"problem_text": "Si un producto cuesta $%d y %s un %d%%, ¿cuál es el precio final? " % [base, action, percent],
-		"hint": "Calcula el %d%% de %d y %s" % [percent, base, "súmalo" if increase else "réstalo"]
+		"problem_text": "If a product costs $%d and %s %d%%, what is the final price? " % [base, action, percent],
 	}
 
 # ===== PROPORCIONES =====
@@ -327,8 +318,7 @@ func _generate_proportion(diff: int, direct: bool) -> Dictionary:
 			"values": [a, b, c],
 			"operation": OPERATION.PROPORTION_DIRECT,
 			"answer": CorrectAnswer,
-			"problem_text": "Si %d es a %d, entonces %d es a ¿cuánto? " % [a, b, c],
-			"hint": "Usa la proporción: %d/%d = %d/x" % [a, b, c]
+			"problem_text": "If %d is to %d, then %d is to how much? " % [a, b, c],
 		}
 	else:
 		d = int(float(a * b) / float(c))
@@ -337,13 +327,12 @@ func _generate_proportion(diff: int, direct: bool) -> Dictionary:
 			"values": [a, b, c],
 			"operation": OPERATION.PROPORTION_INVERSE,
 			"answer": CorrectAnswer,
-			"problem_text": "En proporción inversa: si %d requiere %d, ¿cuánto requiere %d? " % [a, b, c],
-			"hint": "En proporción inversa: %d × %d = %d × x" % [a, b, c]
+			"problem_text": "In inverse proportion: if %d needs %d, how much does %d need? " % [a, b, c],
 		}
 
 # ===== REGLA DE TRES =====
 func _generate_rule_of_three(diff: int, direct: bool) -> Dictionary:
-	var items = ["manzanas", "libros", "dulces", "lapiceros", "horas", "días"]
+	var items = ["apples", "books", "candies", "pens", "hours", "days"]
 	var item = items[rng.randi() % items.size()]
 	
 	var a = rng.randi_range(2, 10)
@@ -358,8 +347,7 @@ func _generate_rule_of_three(diff: int, direct: bool) -> Dictionary:
 			"values": [a, b, c],
 			"operation": OPERATION.RULE_OF_THREE_DIRECT,
 			"answer": CorrectAnswer,
-			"problem_text": "Si %d %s cuestan $%d, ¿cuánto costarán %d %s? " % [a, item, b, c, item],
-			"hint": "Regla de tres directa: multiplica cruzado"
+			"problem_text": "If %d %s cost $%d, how much will %d %s cost? " % [a, item, b, c, item],
 		}
 	else:
 		d = int(float(a * b) / float(c))
@@ -368,8 +356,7 @@ func _generate_rule_of_three(diff: int, direct: bool) -> Dictionary:
 			"values": [a, b, c],
 			"operation": OPERATION.RULE_OF_THREE_INVERSE,
 			"answer": CorrectAnswer,
-			"problem_text": "%d trabajadores tardan %d días. ¿Cuántos días tardarán %d trabajadores? " % [a, b, c],
-			"hint": "Regla de tres inversa: más trabajadores, menos días"
+			"problem_text": "%d workers take %d days. How many days will %d workers take? " % [a, b, c],
 		}
 
 # ===== POTENCIAS Y RAÍCES =====
@@ -383,8 +370,7 @@ func _generate_power(diff: int) -> Dictionary:
 		"operand2": fake_exp,
 		"operation": OPERATION.POWER,
 		"answer": CorrectAnswer,
-		"problem_text": "¿Cuánto es %d elevado a la %d? " % [base, fake_exp],
-		"hint": "Multiplica %d por sí mismo %d veces" % [base, fake_exp]
+		"problem_text": "What is %d raised to the power of %d? " % [base, fake_exp],
 	}
 
 func _generate_square_root(diff: int) -> Dictionary:
@@ -396,8 +382,7 @@ func _generate_square_root(diff: int) -> Dictionary:
 		"operand1": value,
 		"operation": OPERATION.SQUARE_ROOT,
 		"answer": CorrectAnswer,
-		"problem_text": "¿Cuál es la raíz cuadrada de %d? " % value,
-		"hint": "¿Qué número multiplicado por sí mismo da %d?" % value
+		"problem_text": "What is the square root of %d? " % value,
 	}
 
 func _generate_cube_root(_diff: int) -> Dictionary:
@@ -409,8 +394,7 @@ func _generate_cube_root(_diff: int) -> Dictionary:
 		"operand1": value,
 		"operation": OPERATION.CUBE_ROOT,
 		"answer": CorrectAnswer,
-		"problem_text": "¿Cuál es la raíz cúbica de %d? " % value,
-		"hint": "¿Qué número elevado al cubo da %d?" % value
+		"problem_text": "What is the cube root of %d? " % value,
 	}
 
 # ===== GENERACIÓN DE OPCIONES =====
@@ -418,7 +402,6 @@ func GenerateOptions(problem_data: Dictionary, count: int = 4) -> Array:
 	var correct = problem_data["answer"]
 	var options = [correct]
 	
-	# Convertir a float si es string (fracciones)
 	var correct_val = correct if typeof(correct) != TYPE_STRING else problem_data.get("answer_decimal", 0)
 	
 	var attempts = 0
@@ -427,18 +410,15 @@ func GenerateOptions(problem_data: Dictionary, count: int = 4) -> Array:
 		var fake
 		
 		if typeof(correct) == TYPE_STRING:
-			# Para fracciones, generar distractores numéricos
 			fake = snappedf(correct_val + rng.randf_range(-5, 5), 0.01)
 			if fake not in options and fake > 0:
 				options.append(fake)
 		elif typeof(correct_val) == TYPE_FLOAT:
-			# Para decimales
 			var offset = rng.randf_range(-correct_val * 0.3, correct_val * 0.3)
 			fake = snappedf(correct_val + offset, 0.01)
 			if fake not in options and fake > 0:
 				options.append(fake)
 		else:
-			# Para enteros
 			var offset_pct = rng.randf_range(0.1, 0.5)
 			var offset = int(correct_val * offset_pct)
 			if offset == 0:

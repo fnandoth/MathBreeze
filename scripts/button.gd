@@ -27,12 +27,10 @@ func _on_button_pressed():
 	start_minimal_cooldown()
 
 func start_minimal_cooldown():
-	"""Activates minimal cooldown to prevent accidental double-clicks"""
 	IsButtonLocked = true
 	CooldownTimer.start(MinimalCooldownTime)
 
 func _on_cooldown_end():
-	"""Callback when minimal cooldown period ends"""
 	IsButtonLocked = false
 
 func _on_button_pressed_instant():
